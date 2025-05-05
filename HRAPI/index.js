@@ -46,20 +46,20 @@ app.get('/empcount', async(req, res) => {
     
 });
 
-app.get('/count', async(req, res) => {
-    try{
-        let employeescount = await pool.query('SELECT COUNT() FROM employees');
-        const departmentscount = await pool.query('SELECT COUNT() FROM departments');
-        const countriescount = await pool.query('SELECT COUNT() FROM countries');
+app.get('/count', async (req, res) => {
+    try {
+        const employeesResult = await pool.query('SELECT COUNT(*) FROM employees');
+        const departmentsResult = await pool.query('SELECT COUNT(*) FROM departments');
+        const countriesResult = await pool.query('SELECT COUNT(*) FROM countries');
+
         const result = {
-            employeescount,
-            departmentscount,
-            countriescount
-        }
-        res.json(result.rows)
+            employeesCount: parseInt(employeesResult.rows[0].count, 10),
+            departmentsCount: parseInt(departmentsResult.rows[0].count, 10),
+            countriesCount: parseInt(countriesResult.rows[0].count, 10)
+        };
+
+        res.json(result);
+    } catch (err) {
+        res.status(500).json({ Error: err.message });
     }
-    catch(err){
-        res.status(500).json({Error : err.message})
-    }
-    
 });
