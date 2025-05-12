@@ -73,6 +73,7 @@ app.get('/country', async (req, res) => {
     }
 });
 
+
 //query40
 app.get('/query40', async (req, res) => {
     try {
