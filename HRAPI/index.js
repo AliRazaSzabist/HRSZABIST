@@ -64,6 +64,15 @@ app.get('/count', async (req, res) => {
     }
 });
 
+app.get('/country', async (req, res) => {
+    try {
+        const result = await pool.query(`SELECT * from countries`);
+        res.json(result.rows);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 //query40
 app.get('/query40', async (req, res) => {
     try {
